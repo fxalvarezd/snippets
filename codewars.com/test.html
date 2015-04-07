@@ -1,0 +1,541 @@
+<script>
+/*****************************************/
+/*Count letters in string*/
+/*****************************************/
+function count (string) {
+	var count = {};
+	string.split('').forEach(function(s) {
+		count[s] ? count[s]++ : count[s] = 1;
+	});
+
+	return count;
+}
+
+//console.log(count('testing string'));
+
+/*****************************************/
+/*Sort string*/
+/*****************************************/
+function sortGiftCode(code){
+	var array = code.split(''),
+		sortedArray = array.sort(),
+		string = sortedArray.join('');
+
+	return string;
+}
+
+//console.log(sortGiftCode('pqksuvy'));
+
+
+/*****************************************/
+/*Get Prime Numbers*/
+/*****************************************/
+function getPrimes(max) {
+	var primes = [];
+
+	for(var i = 2; i < max; i++){
+		if(isPrime(i)){
+			primes.push(i);
+		}
+	}
+
+	return primes;
+}
+
+function isPrime(num) {
+	for ( var i = 2; i < num; i++ ) {
+		if( num % i == 0 ){
+			return false;
+		}
+	}
+	return true;
+}
+
+//console.log(getPrimes(100));
+
+/*****************************************/
+/*Prime secuence*/
+/*****************************************/
+function getPrimeSequence(max) {
+	var primes = [],
+		count = 0;
+
+	for(var i = 3; count < max; i++){
+		if(isPrime(i)){
+			if(isMirror(i)){
+				primes.push(i);
+				count++;
+			}
+		}
+	}
+
+	return primes;
+}
+
+function isMirror(num) {
+	var numstr = num.toString(),
+		rev =  numstr.split("").reverse().join("");
+	if(numstr === rev){
+		return true;
+	}
+}
+
+//console.log(getPrimeSequence(100));
+
+
+/*****************************************/
+/*Arrays with username that ends with _*/
+/*****************************************/
+function searchNames(logins) {
+	return logins.filter(function(el) {
+		var username = el[0],
+			lastChar = username.substr(username.length - 1);
+
+		if( lastChar === '_' ){
+			return el;
+		}
+	});
+}
+
+//console.log(searchNames([ [ "foo", "foo@foo.com" ], [ "bar_", "bar@bar.com" ], [ "b_ar2_", "bar2@bar2.com" ], [ "b_a_r3", "bar3@bar3.com" ] ]));
+
+
+/*****************************************/
+/*Functional Addition. Create a function add(n) which returns a function that always adds n to any number*/
+/*****************************************/
+function add(n) {
+    function addNum(n1) {
+        return n + n1;
+    }
+    return addNum;
+}
+
+var addOne = add(1);
+//console.log(addOne(3)); //4
+
+
+/*****************************************/
+/*Flatten. Write a function that flattens an Array of Array objects into a flat Array. Your function must only do one level of flattening.*/
+/*****************************************/
+var flatten = function flatten(array) {
+	var returnArray = [];
+
+	array.forEach(function(a) {
+		if( a instanceof Array){
+			//item is an array
+			a.forEach(function(item) {
+				returnArray.push(item);
+			});
+		}else{
+			//item is NOT an array
+			returnArray.push(a);
+		}
+	});
+
+	return returnArray;
+}
+
+//console.log( flatten([1,2,3]) );
+// => [1,2,3]
+
+//console.log( flatten([[1,2,3],["a","b","c"],[1,2,3]]) );
+// => [1,2,3,"a","b","c",1,2,3]
+
+//console.log( flatten([[[1,2,3]]]) );
+// => [[1,2,3]]
+
+
+/*****************************************/
+/*Good vs Evil Battle*/
+/*****************************************/
+function goodVsEvil(good, evil){
+	var outcome = '',
+		goodwin = 'Battle Result: Good triumphs over Evil',
+		evilwin = 'Battle Result: Evil eradicates all trace of Good',
+		tie = 'Battle Result: No victor on this battle field',
+		hobbits = 1,
+		men = 2,
+		elves = 3,
+		dwarves = 3,
+		eagles = 4,
+		wizards = 10,
+		orcs = 1,
+		wargs = 2,
+		goblins = 2,
+		urukhai = 3,
+		trolls = 5,
+		goodArray = good.split(' '),
+		evilArray = evil.split(' '),
+		goodTotal = goodArray[0]*hobbits + goodArray[1]*men + goodArray[2]*elves + goodArray[3]*dwarves + goodArray[4]*eagles + goodArray[5]*wizards,
+		evilTotal = evilArray[0]*orcs + evilArray[1]*men + evilArray[2]*wargs + evilArray[3]*goblins + evilArray[4]*urukhai + evilArray[5]*trolls + evilArray[6]*wizards;
+
+		if( goodTotal > evilTotal ){
+			outcome = goodwin;
+		}else if( goodTotal < evilTotal ){
+			outcome = evilwin;
+		}else{
+			outcome = tie;
+		}
+
+	return outcome;
+}
+
+//console.log( goodVsEvil('1 1 1 1 1 1', '1 1 1 1 1 1 1') );
+// goodVsEvil('1 1 1 1 1 1', '1 1 1 1 1 1 1') === 'Battle Result: Evil eradicates all trace of Good'
+// goodVsEvil('0 0 0 0 0 10', '0 1 1 1 1 0 0') === 'Battle Result: Good triumphs over Evil'
+// goodVsEvil('1 0 0 0 0 0', '1 0 0 0 0 0 0') === 'Battle Result: No victor on this battle field'
+
+
+/*****************************************/
+/*Find the Mine!*/
+/*****************************************/
+function mineLocation(field){
+	var returnArray = [];
+	field.forEach(function(row, x) {
+		row.forEach(function(col, y) {
+			if( col == 1 ){
+				returnArray.push(x)
+				returnArray.push(y)
+			}
+		});
+	});
+	return returnArray;
+}
+
+//console.log( mineLocation( [ [1, 0], [0, 0] ] ) );
+// [0, 0]
+
+//console.log( mineLocation( [ [1, 0, 0], [0, 0, 0], [0, 0, 0] ] ) );
+// [0, 0]
+
+//console.log( mineLocation( [ [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 1, 0], [0, 0, 0, 0] ] ) );
+// [2, 2]
+
+
+/*****************************************/
+/*Array Diff*/
+/*****************************************/
+function array_diff(a, b) {
+	return a.filter(function(i) {
+		return b.indexOf(i) === -1;
+	});
+}
+
+//console.log( array_diff([1,2], [1]) );
+// [2]
+
+//console.log( array_diff([1,2,2], [2]) );
+// [1]
+
+
+/*****************************************/
+/*Throwing Darts. Dart Score calculation*/
+/*****************************************/
+function scoreThrows(radiuses){
+	var bonus = true,
+		score = 0;
+
+	if( radiuses.length ){
+		radiuses.forEach(function(r) {
+			if( r < 5 ){
+				score += 10;
+			}else if( r <= 10 ){
+				score += 5;
+				bonus = false;
+			}else{
+				bonus= false;
+			}
+		});
+
+		if( bonus ){
+			score += 100;
+		}
+	}
+
+	return score;
+}
+
+//console.log( scoreThrows( [1, 5, 11] ) );
+// 15
+
+//console.log( scoreThrows( [15, 20, 30] ) );
+// 0
+
+//console.log( scoreThrows( [1, 2, 3, 4] ) );
+// 140
+
+//console.log( scoreThrows( [] ) );
+// 0
+
+
+
+/*****************************************/
+/*Does my number look big in this? Narcissistic Numbers*/
+/*****************************************/
+function narcissistic( value ) {
+	var string = value.toString(),
+		array = string.split(''),
+		numdigits = array.length,
+		result = 0;
+
+	array.forEach(function(d){
+		result += Math.pow(d, numdigits);
+	});
+
+	if( value === result ){
+		return true;
+	}else{
+		return false;
+	}
+}
+
+//console.log( narcissistic( 7 ) );
+// true
+
+//console.log( narcissistic( 84 ) );
+// false
+
+//console.log( narcissistic( 371 ) );
+// true
+
+
+/*****************************************/
+/*Who likes it? Facebook Likes*/
+/*****************************************/
+function likes(names) {
+	if( names.length === 0 ){
+		return 'no one likes this';
+	}else if( names.length === 1 ){
+		return names[0] + ' likes this';
+	}else if( names.length === 2 ){
+		return names[0] + ' and ' + names[1] + ' like this';
+	}else if( names.length === 3 ){
+		return names[0] + ', ' + names[1] + ' and ' + names[2] + ' like this';
+	}else{
+		return names[0] + ', ' + names[1] + ' and ' + (names.length - 2) + ' others like this';
+	}
+}
+
+//console.log( likes([]) );
+// 'no one likes this'
+
+//console.log( likes(['Peter']) );
+// 'Peter likes this'
+
+//console.log( likes(['Jacob', 'Alex']) );
+// 'Jacob and Alex like this'
+
+//console.log( likes(['Max', 'John', 'Mark']) );
+// 'Max, John and Mark like this'
+
+//console.log( likes(['Alex', 'Jacob', 'Mark', 'Max']) );
+// 'Alex, Jacob and 2 others like this'
+
+
+
+
+/*****************************************/
+/*Ordinal Numbers*/
+/*****************************************/
+function ordinal(number, brief) {
+	var n = 'th',
+		string = number.toString(),
+		lastDigit = parseInt(string.slice(-1)),
+		twoLastDigits = parseInt(string.slice(-2));
+
+	if( twoLastDigits <= 10 || twoLastDigits >= 20) {
+		switch( lastDigit ) {
+			case 1:
+				n = 'st';
+				break;
+			case 2:
+				n = 'nd';
+				break;
+			case 3:
+				n = 'rd';
+				break;
+		}
+	}
+
+	if( brief ){
+		if( n.slice(-1) === 'd' ){
+			n = n.slice(-1);
+		}
+	}
+
+	return n;
+}
+
+//console.log( ordinal(1) );
+// 'st'
+//console.log( ordinal(11) );
+// "th"
+//console.log( ordinal(111) );
+// "th"
+//console.log( ordinal(121) );
+// "st"
+//console.log( ordinal(20) );
+// "th"
+//console.log( ordinal(52) );
+// "nd"
+//console.log( ordinal(903, true) );
+//  "d"
+
+
+
+/*****************************************/
+/*Simple Substitution Cipher Helper*/
+/*****************************************/
+function SubstitutionCipher(abc1, abc2) {
+	this.encode = function (str) {
+		var array = str.split('');
+		return array.map(function(character){ return abc2[abc1.indexOf(character)] || character; }).join('');
+	}
+	this.decode = function (str) {
+		var array = str.split('');
+		return array.map(function(character){ return abc1[abc2.indexOf(character)] || character; }).join('');
+	}
+}
+
+var abc1 = "abcdefghijklmnopqrstuvwxyz";
+var abc2 = "etaoinshrdlucmfwypvbgkjqxz";
+
+var sub = new SubstitutionCipher(abc1, abc2);
+
+//console.log( sub.encode("abc") ); // => "eta"
+//console.log( sub.encode("xyz") ); // => "qxz"
+//console.log( sub.encode("aeiou") ); // => "eirfg"
+//console.log( sub.encode("ae&iou") ); // => "ei&rfg"
+
+//console.log( sub.decode("eta") ); // => "abc"
+//console.log( sub.decode("qxz") ); // => "xyz"
+//console.log( sub.decode("eirfg") ); // => "aeiou"
+
+
+/*****************************************/
+/*Complete Fibonacci Series*/
+/*****************************************/
+function fibonacci(n) {
+	var array = [],
+		a = 0;
+		b = 1;
+
+	if(n > 0){
+		array.push( a );
+		array.push( b );
+
+		for( var i = 1; i <= ( n - 2 ); i++ ){
+			aux = a;
+			a = b;
+			b = aux + b;
+
+			array.push( b );
+		}
+	}
+
+	return array;
+}
+
+//console.log( fibonacci(13) ); // => [0,1,1,2,3,5,8,13,21]
+
+
+
+/*****************************************/
+/*Two levels arrays*/
+/*****************************************/
+function flattenTwoLevels(array) {
+  var result = [];
+  array.forEach(function(val) {
+    if (val instanceof Array && val.some(function(item) {return item instanceof Array;}))
+      result.push(Array.prototype.concat.apply([], flattenTwoLevels(val)));
+    else
+      result.push(val);
+   });
+  return result;
+}
+
+//console.log( flattenTwoLevels( [1, [2, 3], [4, 5, [6, 7, 8], 9, 10, [11, [12, [13, 14], 15], 16], 17], 18] ) );
+// should return [1,[2,3],[4,5,6,7,8,9,10,11,12,13,14,15,16,17], 18]
+
+//console.log( flattenTwoLevels( [1,[2, 3, [], [4, [], 5]]] ) );
+// should return [1,[2,3,4,5]]
+
+
+
+/*****************************************/
+/*Memoized Fibonacci*/
+/*****************************************/
+var memoFibonacci = function(n) {
+	var a = 0;
+	var b = 1;
+
+	while(n--) {
+		var aux = b;
+		b = a + b;
+		a = aux;
+	}
+
+	return a;
+}
+
+//console.log( memoFibonacci(4) );
+
+
+
+/*****************************************/
+/*Triangular Treasure*/
+/*return (n > 0) ? ((n * n) + n) / 2 : 0;*/
+/*****************************************/
+function triangular( n ) {
+	var total = 0,
+		aux = 0;
+
+	for ( var i = 0; i < n; i++) {
+		aux = aux + 1;
+		total = aux + total;
+	}
+
+	return total;
+}
+
+//console.log( triangular( 1 ) );
+// should return 1
+
+//console.log( triangular( 2 ) );
+// should return 3
+
+//console.log( triangular( 3 ) );
+// should return 6
+
+//console.log( triangular( 4 ) );
+// should return 10
+
+//console.log( triangular( 5 ) );
+// should return 15
+
+
+/*****************************************/
+/*Infinite Arguments*/
+/*mkdirp('/','tmp','made','some','dir')*/
+/*return /tmp/made/some/dir*/
+/*****************************************/
+//Those /**/ comments on the argument lists are not mandatory. I just like using them to make functions with variadic functions a bit more explicit
+function mkdirp(/**/) {
+	var args = arguments,
+		returnString = '';
+
+    for(var i=0; i<args.length; i++){
+    	if ( args[i] == '/' || returnString === '/' ) {
+    		returnString += args[i];
+    	} else {
+        	returnString += '/' + args[i];
+    	}
+    }
+
+	return returnString;
+}
+
+console.log( mkdirp('/','tmp','made','some','dir') );
+// should return /tmp/made/some/dir
+
+</script>

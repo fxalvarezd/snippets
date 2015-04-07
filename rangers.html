@@ -1,0 +1,82 @@
+<style>
+.exercise-objective {
+	background: lightBlue;
+}
+.exercise-objective code {
+	background: rgba(254,254,254,0.5);
+	border-radius: 3px;
+	color: #406878;
+	display: inline-block;
+	font-size: 0.94737em;
+	line-height: 0.8;
+	padding: 0.26316em;
+}
+
+</style>
+
+<div class="exercise-objective">
+	<p>The ranger-devs have really had a lot of success with your vehicle objects. They've even created their own objects that represent each ranger-dev, then placed those objects inside your vehicle objects. They were hoping to keep track of which ranger-devs are assigned to patrol duty on specific vehicles. The <code>vehicle3</code> object is provided in the challenge editor as an example.</p>
+
+	<p>Alas, they haven't yet built a function that relieves ranger-devs from duty because the difficulty is just TOO HARD! Removing a ranger means that the remaining rangers would need to be renumbered.</p>
+
+	<p>They've asked for your assistance in getting the off-duty rangers <em>out</em> of the vehicle while holding on to their objects for further use, as well as re-numbering the rangers who should remain on-duty <em>in</em> the vehicle.</p>
+
+	<p>Build a function called <code>relieveDuty</code> that accepts a <code>vehicle</code> object and a <code>day</code> of the week as parameters. This function should take care of all of the following requirements:</p>
+
+	<ol>
+		<li>
+		<p>Search only over all of the ranger objects contained within the <code>vehicle</code> object, creatively using the existing <code>numRangers</code> property to do so. No need to look at the other properties in the <code>vehicle</code>.</p>
+		</li>
+		<li>
+		<p>All existing ranger objects will need to be sorted into <code>offDuty</code> and <code>onDuty</code> arrays. The <code>offDuty</code> array will be returned from the function. The <code>onDuty</code> array will contain staying rangers that need to be renumbered.</p>
+		</li>
+		<li>
+		<p>All <code>onDuty</code> rangers will be re-added to the vehicle object, with their property names rebuilt in the order that rangers were added to <code>onDuty</code>. Ranger numbers should start with 1. Remember to remove the existing property.</p>
+		</li>
+		<li>
+		<p>At the end of these operations, remember to adjust the <code>numRangers</code> property to contain the new, smaller amount of rangers.</p>
+		</li>
+	</ol>
+
+	<p>Lastly, call the <code>relieveDuty</code> function and pass in <code>vehicle3</code> and <code>"Friday"</code>. The resulting array of objects should be stored in a variable called <code>offToday</code>.</p>
+</div>
+
+<script>
+	var vehicle3 = {
+		type: "Submarine", capacity: 8, storedAt: "Underwater Outpost",
+		ranger1: {name: "Gregg Pollack", skillz: "Lasering", dayOff: "Friday"},
+		ranger2: {name: "Bijan Boustani", skillz: "Roundhouse Kicks", dayOff: "Never"},
+		ranger3: {name: "Ashley Smith", skillz: "Torpedoing", dayOff: "Friday"},
+		ranger4: {name: "Mark Krupinski", skillz: "Sniping", dayOff: "Wednesday"},
+		numRangers: 4
+	};
+
+	// build a relieveDuty function
+	function relieveDuty(vehicle, day){
+		var onDuty = [];
+		var offDuty = [];
+		var rangerNum = vehicle.numRangers;
+
+		for(var i = 1; i <= rangerNum; i++){
+			if(vehicle['ranger'+i].dayOff == day){
+				offDuty.push(vehicle['ranger'+i]);
+				vehicle.numRangers--;
+			}else{
+				onDuty.push(vehicle['ranger'+i]);
+			}
+
+			delete vehicle['ranger'+i];
+		}
+
+		for(var j = 1; j <= onDuty.length; j++){
+			vehicle['ranger'+j] = onDuty[j-1];
+		}
+
+		return offDuty;
+	}
+
+	var offToday = relieveDuty(vehicle3, "Friday");
+
+	console.log(offToday);
+	console.log(vehicle3);
+</script>
